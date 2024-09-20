@@ -7,9 +7,9 @@ class Program
 
         List<int> numbers = new List<int>();
 
+        Console.WriteLine("Enter a list of numbers, type 0 when finished.");
         while(true)
         {
-            Console.WriteLine("Enter a list of numbers, type 0 when finished.");
             Console.Write("Enter number: ");
             string userInput = Console.ReadLine();
             int number = int.Parse(userInput);
