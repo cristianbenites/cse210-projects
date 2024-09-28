@@ -75,7 +75,7 @@ public class Journal
         {
             string line = lines[i];
 
-            string[] parts = line.Split(",");
+            string[] parts = line.Split("\",\"");
             _entries.Add(new Entry(
                 parts[0].Replace("\"", ""),
                 parts[1].Replace("\"", ""),
@@ -89,20 +89,9 @@ public class Journal
         Console.WriteLine("What is the filename?");
         string filename = Console.ReadLine();
 
-        bool shouldAppendHeader = true;
-
-        if(File.Exists(filename))
-        {
-            shouldAppendHeader = false;
-        }
-
-
         using (StreamWriter outputFile = new StreamWriter(filename))
         {
-            if(shouldAppendHeader)
-            {
-                outputFile.WriteLine("Date,Prompt,Answer");
-            }
+            outputFile.WriteLine("Date,Prompt,Answer");
 
             _entries.ForEach(entry => 
                 outputFile.WriteLine($"\"{entry._date}\",\"{entry._prompt}\",\"{entry._answer}\""));
