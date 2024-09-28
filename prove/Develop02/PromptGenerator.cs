@@ -11,7 +11,7 @@ public class PromptGenerator
         _prompts.Add("If I had one thing I could do over today, what would it be?");
     }
 
-    public string GetPromt()
+    public string GetPrompt()
     {
         return _prompts.ElementAt(new Random().Next(0, _prompts.Count));
     }

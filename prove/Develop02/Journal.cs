@@ -50,7 +50,7 @@ public class Journal
 
     public void Write()
     {
-        string prompt = _promptGenerator.GetPromt();
+        string prompt = _promptGenerator.GetPrompt();
 
         Console.WriteLine(prompt);
         string answer = Console.ReadLine();
