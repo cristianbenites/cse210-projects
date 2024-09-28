@@ -70,14 +70,16 @@ public class Journal
         string[] lines = File.ReadAllLines(filename);
         _entries = new List<Entry>();
 
-        foreach (string line in lines)
+        // Start from 1 to skip the fist line, which is the header.
+        for (int i = 1; i < lines.Count(); i++)
         {
-            string[] parts = line.Split("|");
+            string line = lines[i];
 
+            string[] parts = line.Split(",");
             _entries.Add(new Entry(
-                parts[0],
-                parts[1],
-                parts[2]
+                parts[0].Replace("\"", ""),
+                parts[1].Replace("\"", ""),
+                parts[2].Replace("\"", "")
             ));
         }
     }
@@ -87,10 +89,23 @@ public class Journal
         Console.WriteLine("What is the filename?");
         string filename = Console.ReadLine();
 
+        bool shouldAppendHeader = true;
+
+        if(File.Exists(filename))
+        {
+            shouldAppendHeader = false;
+        }
+
+
         using (StreamWriter outputFile = new StreamWriter(filename))
         {
+            if(shouldAppendHeader)
+            {
+                outputFile.WriteLine("Date,Prompt,Answer");
+            }
+
             _entries.ForEach(entry => 
-                outputFile.WriteLine($"{entry._date}|{entry._prompt}|{entry._answer}"));
+                outputFile.WriteLine($"\"{entry._date}\",\"{entry._prompt}\",\"{entry._answer}\""));
         }
 
         Console.WriteLine($"Entries attached to file {filename}");
@@ -99,12 +114,12 @@ public class Journal
     public string GetFileName()
     {
 
-        Console.WriteLine("What is the filename? (defaul 'journal.txt')");
+        Console.WriteLine("What is the filename? (defaul 'journal.csv')");
         string filename = Console.ReadLine();
 
         if (filename == "")
         {
-            filename = "journal.txt";
+            filename = "journal.csv";
         }
 
         return filename;
