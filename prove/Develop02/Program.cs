@@ -1,9 +1,13 @@
-using System;
-
 class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Develop02 World!");
+        Journal journal = new Journal();
+
+        while(journal.SystemIsRunning())
+        {
+            journal.Run();
+        }
+        
     }
 }
