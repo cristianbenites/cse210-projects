@@ -16,13 +16,18 @@ public class Scripture
         }
     }
 
+    public string GetReferenceText()
+    {
+        return _reference.GetDisplayText();
+    }
+
     public void HideRandomWords(int numberToHide)
     {
 
         while (!IsCompletelyHidden() && numberToHide > 0)
         {
             IEnumerable<Word> notHidden = _words.Where(w => !w.IsHidden());
-            int number = _random.Next(0, notHidden.Count() - 1);
+            int number = _random.Next(notHidden.Count());
             Word selected = notHidden.ElementAt(number);
 
             selected.Hide();
@@ -30,19 +35,31 @@ public class Scripture
         }
     }
 
+    public bool IsCompletelyHidden()
+    {
+        return _words.TrueForAll(word => word.IsHidden());
+    }
+
+    public string GetNotHiddenText()
+    {
+        return MapTextAndConcat(word => word.GetVisibleText());
+    }
+
     public string GetDisplayText()
+    {
+        return MapTextAndConcat(word => word.GetDisplayText());
+    }
+
+    private string MapTextAndConcat(Converter<Word, string> converter)
     {
         string text = "";
 
         _words.ForEach(word => {
-            text += word.GetDisplayText() + " ";
+            text += converter.Invoke(word) + " ";
         });
 
         return text.Trim();
     }
 
-    public bool IsCompletelyHidden()
-    {
-        return _words.TrueForAll(word => word.IsHidden());
-    }
+
 }
