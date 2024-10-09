@@ -28,6 +28,13 @@ class Program
 
         List<Video> videos = [video1, video2, video3, video4];
 
-        videos.ForEach(video => video.DisplayText());
+        videos.ForEach(video => {
+            Console.WriteLine($"Name: {video.GetName()}");
+            Console.WriteLine($"Author: {video.GetAuthor()}");
+            Console.WriteLine($"Duration (in seconds): {video.GetLength()}");
+            Console.WriteLine($"Number of comments: {video.GetNumberOfComments()}");
+            video.DisplayComments();
+            Console.WriteLine();
+        });
     }
 }

@@ -17,16 +17,31 @@ public class Video
         _comments.Add(comment);
     }
 
-    public void DisplayText()
+    public string GetName()
     {
-        Console.WriteLine($"Name: {_name}");
-        Console.WriteLine($"Author: {_author}");
-        Console.WriteLine($"Duration (in seconds): {_lengthInSeconds}");
-        Console.WriteLine("Comments");
+        return _name;
+    }
+
+    public string GetAuthor()
+    {
+        return _author;
+    }
+
+    public int GetLength()
+    {
+        return _lengthInSeconds;
+    }
+
+    public int GetNumberOfComments()
+    {
+        return _comments.Count;
+    }
+
+    public void DisplayComments()
+    {
         _comments.ForEach(comment => {
             comment.DisplayText();
         });
-        Console.WriteLine();
     }
 
 }
