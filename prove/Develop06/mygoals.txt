@@ -1,0 +1,4 @@
+390
+Simple Goal::Give a talk;;give a talk at the sacrament meeting;;50;;True
+Eternal Goal::read the scriptures;;study for 15 minutes at least everyday;;25
+Checklist Goal::go to the gym;;make exercises;;30;;3;;200;;3
