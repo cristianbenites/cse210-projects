@@ -87,13 +87,15 @@ public class GoalManager
         Console.WriteLine("  1. Simple Goal");
         Console.WriteLine("  2. Eternal Goal");
         Console.WriteLine("  3. Checklist Goal");
+        Console.WriteLine("  4. Negative Goal (you lose points when you do it)");
 
         Console.Write("Which type of goal would you like to create? ");
         string choice = Console.ReadLine();
 
-        if(choice != "1" && choice != "2" && choice != "3")
+        if(choice != "1" && choice != "2" && choice != "3" && choice != "4")
         {
             Console.WriteLine($"There is no option for '{choice}. Please, write a number.'");
+            Thread.Sleep(500);
             return;
         }
 
@@ -127,6 +129,12 @@ public class GoalManager
 
             _goals.Add(new ChecklistGoal(name, description, points, int.Parse(times), int.Parse(bonus)));
         }
+
+        if(choice == "4")
+        {
+            _goals.Add(new NegativeGoal(name, description, points));
+        }
+
         Console.WriteLine();
     }
 
@@ -141,15 +149,21 @@ public class GoalManager
         Goal goal = _goals[accomplished-1];
         int pointsEarned = goal.RecordEvent();
 
+        _score += pointsEarned;
+
+        string message = $"Congratulations! You have earned {pointsEarned} points!";
+
         if (pointsEarned == 0)
         {
-            Console.WriteLine("It seems that you chose a goal that is already completed.\n");
-            Thread.Sleep(1000);
-            return;
+            message = "It seems that you chose a goal that is already completed.\n";
         }
 
-        Console.WriteLine($"Congratulations! You have earned {pointsEarned} points!");
-        _score += pointsEarned;
+        if (pointsEarned < 0)
+        {
+            message = $"Sorry! You lost {pointsEarned * -1} points.";
+        }
+
+        Console.WriteLine(message);
 
         Console.WriteLine($"You now have {_score} points.\n");
         Thread.Sleep(1000);
